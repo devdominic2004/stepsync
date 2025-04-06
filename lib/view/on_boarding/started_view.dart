@@ -32,8 +32,10 @@ class _StartedViewState extends State<StartedView> {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
             const Spacer(),
+
             Text(
               "StepSync",
               style: TextStyle(

@@ -1,8 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:stepsync/common/color_extension.dart';
+// import 'package:stepsync/view/login/forgot_password.dart';
+import 'package:stepsync/view/login/login_view.dart';
 // import 'package:stepsync/view/on_boarding/on_boarding_view.dart';
-import 'package:stepsync/view/on_boarding/started_view.dart';
+// import 'package:stepsync/view/on_boarding/started_view.dart';
+// import 'package:stepsync/wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'StepSync',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
         primaryColor: TColor.primaryColor1,
         fontFamily: "Poppins",
       ),
-      home: const StartedView(),
+      home: const LoginView(),
     );
   }
 }

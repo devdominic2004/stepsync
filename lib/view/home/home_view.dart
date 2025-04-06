@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:stepsync/common/color_extension.dart';
@@ -11,6 +12,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final user = FirebaseAuth.instance.currentUser;
+
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -45,6 +52,11 @@ class _HomeViewState extends State<HomeView> {
                         ),
 
                         SizedBox(height: media.width * 0.05),
+
+                        FloatingActionButton(
+                          onPressed: () => signOut(),
+                          child: Icon(Icons.login_rounded),
+                        ),
                       ],
                     ),
                   ],
@@ -92,6 +104,7 @@ class _HomeViewState extends State<HomeView> {
                                 Text(
                                   "You have a normal weight",
                                   style: TextStyle(
+                                    // ignore: deprecated_member_use
                                     color: TColor.white.withOpacity(0.7),
                                     fontSize: 12,
                                   ),

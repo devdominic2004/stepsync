@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:stepsync/common/color_extension.dart';
 import 'package:stepsync/common_widget/round_button.dart';
 import 'package:stepsync/common_widget/round_text_field.dart';
-import 'package:stepsync/view/login/complete_profile_view.dart';
+// import 'package:stepsync/view/login/complete_profile_view.dart';
 import 'package:stepsync/view/login/login_view.dart';
+import 'package:stepsync/wrapper.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -13,6 +17,17 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email.text.trim(),
+      password: password.text.trim(),
+    );
+    Get.offAll(Wrapper());
+  }
+
   bool isCheck = false;
   @override
   Widget build(BuildContext context) {
@@ -44,29 +59,30 @@ class _SignUpViewState extends State<SignUpView> {
 
                 SizedBox(height: media.width * 0.05),
 
-                const RoundTextField(
-                  hintText: "First Name",
-                  icon: "assets/img/user_text.png",
-                ),
+                // const RoundTextField(
+                //   hintText: "First Name",
+                //   icon: "assets/img/user_text.png",
+                // ),
 
-                SizedBox(height: media.width * 0.04),
+                // SizedBox(height: media.width * 0.04),
 
-                const RoundTextField(
-                  hintText: "Second Name",
-                  icon: "assets/img/user_text.png",
-                ),
+                // const RoundTextField(
+                //   hintText: "Second Name",
+                //   icon: "assets/img/user_text.png",
+                // ),
 
-                SizedBox(height: media.width * 0.04),
-
-                const RoundTextField(
+                // SizedBox(height: media.width * 0.04),
+                RoundTextField(
                   hintText: "Email ID",
                   icon: "assets/img/email.png",
                   keyboardType: TextInputType.emailAddress,
+                  controller: email,
                 ),
 
                 SizedBox(height: media.width * 0.04),
 
                 RoundTextField(
+                  controller: password,
                   hintText: "Password",
                   icon: "assets/img/lock.png",
                   obscureText: true,
@@ -120,17 +136,7 @@ class _SignUpViewState extends State<SignUpView> {
 
                 SizedBox(height: media.width * 0.4),
 
-                RoundButton(
-                  title: "Register",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CompleteProfileView(),
-                      ),
-                    );
-                  },
-                ),
+                RoundButton(title: "Register", onPressed: (() => signUp())),
 
                 SizedBox(height: media.width * 0.04),
 
@@ -179,9 +185,7 @@ class _SignUpViewState extends State<SignUpView> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginView(),
-                      ),
+                      MaterialPageRoute(builder: (context) => LoginView()),
                     );
                   },
                   child: Row(
