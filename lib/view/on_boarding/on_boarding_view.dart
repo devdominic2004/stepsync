@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stepsync/common/color_extension.dart';
 import 'package:stepsync/common_widget/on_boarding_page.dart';
-import 'package:stepsync/view/login/signup_view.dart';
+import 'package:stepsync/view/login/login_view.dart';
+// import 'package:stepsync/view/login/signup_view.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({super.key});
@@ -119,7 +120,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SignUpView(),
+                            builder: (context) => const LoginView(),
                           ),
                         );
                       }

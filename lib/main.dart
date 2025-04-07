@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:stepsync/common/color_extension.dart';
 // import 'package:stepsync/view/login/forgot_password.dart';
-import 'package:stepsync/view/login/login_view.dart';
+// import 'package:stepsync/view/login/login_view.dart';
+import 'package:stepsync/view/on_boarding/started_view.dart';
 // import 'package:stepsync/view/on_boarding/on_boarding_view.dart';
 // import 'package:stepsync/view/on_boarding/started_view.dart';
 // import 'package:stepsync/wrapper.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         primaryColor: TColor.primaryColor1,
         fontFamily: "Poppins",
       ),
-      home: const LoginView(),
+      home: const StartedView(),
     );
   }
 }
