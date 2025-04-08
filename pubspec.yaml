@@ -38,6 +38,9 @@ dependencies:
   firebase_core: ^3.13.0
   firebase_auth: ^5.5.2
   get: ^4.7.2
+  permission_handler: ^11.0.1
+  pedometer: ^4.1.1
+  syncfusion_flutter_gauges: ^24.1.41
 
 dev_dependencies:
   flutter_test:
