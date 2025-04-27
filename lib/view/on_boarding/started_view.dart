@@ -37,7 +37,7 @@ class _StartedViewState extends State<StartedView> {
             const Spacer(),
 
             Text(
-              "StepSync",
+              "StrideSync",
               style: TextStyle(
                 color: TColor.black,
                 fontSize: 36,
@@ -79,6 +79,8 @@ class _StartedViewState extends State<StartedView> {
                 ),
               ),
             ),
+
+            SizedBox(height: media.width * 0.07),
           ],
         ),
       ),

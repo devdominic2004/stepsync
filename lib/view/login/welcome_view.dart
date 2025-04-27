@@ -33,7 +33,7 @@ class _WelcomeViewState extends State<WelcomeView> {
               SizedBox(height: media.width * 0.1),
 
               Text(
-                "Welcome to StepSync!",
+                "Welcome to StrideSync!",
                 style: TextStyle(
                   color: TColor.black,
                   fontSize: 20,

@@ -49,7 +49,7 @@ class _MainTabViewState extends State<MainTabView> {
       //   ),
       // ),
       bottomNavigationBar: BottomAppBar(
-        color: TColor.white,
+        color: TColor.black,
         child: Container(
           decoration: BoxDecoration(
             color: TColor.white,

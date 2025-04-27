@@ -56,7 +56,7 @@ class _SleepClockState extends State<SleepView> {
   void _updateNeedle() {
     setState(() {
       // Move needle slightly each second (0.1 units per second)
-      _needleValue = (_needleValue + 0.1) % 24;
+      _needleValue = (_needleValue + 0.1) % 12;
     });
   }
 

@@ -31,19 +31,30 @@ class _LoginViewState extends State<LoginView> {
           );
 
       if (userCredential.user != null) {
-        // ✅ Login successful – Navigate to dashboard
         Navigator.pushReplacementNamed(context, 'dashboard');
       } else {
-        // 🛑 Login failed – Show error
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Login failed')));
+        ).showSnackBar(const SnackBar(content: Text('Login failed')));
       }
-    } catch (e) {
-      // 🛑 Error while logging in (invalid email, wrong password, etc.)
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Wrong password provided for that user.';
+      } else {
+        errorMessage = 'Authentication error: ${e.message}';
+      }
+
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Invalid Email or Password')));
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An unexpected error occurred.')),
+      );
     }
   }
 
@@ -122,10 +133,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       );
                     } else {
-                      signIn(
-                        email,
-                        password,
-                      ); // ✅ Firebase check with error handling
+                      signIn(email, password);
                     }
                   },
                 ),
@@ -134,7 +142,7 @@ class _LoginViewState extends State<LoginView> {
 
                 RoundButton(
                   title: "Forgot Password?",
-                  onPressed: (() => Get.to(ForgotPassword())),
+                  onPressed: () => Get.to(const ForgotPassword()),
                 ),
 
                 SizedBox(height: media.width * 0.04),
@@ -179,8 +187,7 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(height: media.width * 0.04),
 
                 TextButton(
-                  onPressed: (() => Get.to(SignUpView())),
-
+                  onPressed: () => Get.to(const SignUpView()),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

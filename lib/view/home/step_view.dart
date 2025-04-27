@@ -27,28 +27,42 @@ class StepTrackerState extends State<StepTracker> {
   List<FlSpot> distanceData = [FlSpot(0, 0)];
   List<FlSpot> speedData = [FlSpot(0, 0)];
   int timeIndex = 0;
+  Stream<StepCount>? _stepCountStream;
+  int _initialSteps = 0;
 
   @override
   void initState() {
     super.initState();
-    requestPermission(); // Ask for permission first
+    requestPermission();
   }
 
   void requestPermission() async {
-    if (await Permission.activityRecognition.request().isGranted) {
-      startStepTracking(); // Only start tracking if permission granted
+    if (await Permission.activityRecognition.isGranted) {
+      startStepTracking();
     } else {
-      debugPrint("Activity Recognition Permission not granted.");
+      PermissionStatus status = await Permission.activityRecognition.request();
+      if (status.isGranted) {
+        startStepTracking();
+      } else {
+        debugPrint("Activity Recognition Permission not granted.");
+      }
     }
   }
 
-  void startStepTracking() {
-    Pedometer.stepCountStream
-        .listen((StepCount event) {
+  void startStepTracking() async {
+    try {
+      // Get initial step count
+      final initialStepCount = await Pedometer.stepCountStream.first;
+      _initialSteps = initialStepCount.steps;
+
+      _stepCountStream = Pedometer.stepCountStream;
+      _stepCountStream!.listen(
+        (StepCount event) {
           setState(() {
-            _steps = event.steps;
-            _distance = _steps * 0.0008;
-            _calories = _steps * 0.04;
+            // Calculate steps since app opened
+            _steps = event.steps - _initialSteps;
+            _distance = _steps * 0.0008; // assuming 0.8m per step
+            _calories = _steps * 0.04; // rough estimate
             double speed = (_distance / (timeIndex + 1)) * 10;
 
             kcalData.add(FlSpot(timeIndex.toDouble(), _calories));
@@ -57,10 +71,14 @@ class StepTrackerState extends State<StepTracker> {
 
             timeIndex++;
           });
-        })
-        .onError((error) {
-          debugPrint("Step Count Error: $error");
-        });
+        },
+        onError: (error) {
+          debugPrint('Step Count Stream Error: $error');
+        },
+      );
+    } catch (e) {
+      debugPrint('Error getting initial step count: $e');
+    }
   }
 
   @override
@@ -71,30 +89,13 @@ class StepTrackerState extends State<StepTracker> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0F0C29), // Dark Purple
-              Color(0xFF302B63), // Mid Blue-Purple
-              Color(0xFF24243e), // Deep Indigo
-            ],
+            colors: [Color(0xFF0F0C29), Color(0xFF302B63), Color(0xFF24243e)],
           ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 60),
-            // const Text(
-            //   'Welcome Back,',
-            //   style: TextStyle(color: Colors.white70, fontSize: 18),
-            // ),
-            // const Text(
-            //   'Stefani Wong',
-            //   style: TextStyle(
-            //     color: Colors.white,
-            //     fontSize: 24,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            const SizedBox(height: 30),
             Center(
               child: Container(
                 width: 200,

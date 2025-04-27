@@ -41,6 +41,9 @@ dependencies:
   permission_handler: ^11.0.1
   pedometer: ^4.1.1
   syncfusion_flutter_gauges: ^24.1.41
+  shared_preferences: ^2.2.2
+  intl: ^0.18.1
+  sensors_plus: ^6.1.1
 
 dev_dependencies:
   flutter_test:
