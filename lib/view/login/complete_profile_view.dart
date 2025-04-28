@@ -126,7 +126,7 @@ class _CompleteProfileViewState extends State<CompleteProfileView> {
                         children: [
                           Expanded(
                             child: RoundTextField(
-                              controller: txtDate,
+                              controller: txtWeight,
                               hintText: "Your Weight",
                               icon: "assets/img/weight.png",
                             ),
@@ -161,7 +161,7 @@ class _CompleteProfileViewState extends State<CompleteProfileView> {
                         children: [
                           Expanded(
                             child: RoundTextField(
-                              controller: txtDate,
+                              controller: txtHeight,
                               hintText: "Your Height",
                               icon: "assets/img/height.png",
                             ),
